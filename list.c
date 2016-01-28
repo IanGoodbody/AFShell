@@ -71,7 +71,7 @@ node* list_removen(node* cNode, int index){
     index--;
     if(index < 0)
         return NULL;
-    if(!cNode) //index excedes the end of the list
+    else if(!cNode) //index excedes the end of the list
         return cNode;
     else if(!index){
         node* sNode = cNode->next;
