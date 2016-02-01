@@ -98,7 +98,8 @@ int main(void) {
   3: two
   4: three
   */
-  list_destroy(list);
+
+  list = list_destroy(list);
 
   // Stress Testing
 

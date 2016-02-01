@@ -29,7 +29,7 @@ node* list_insert_tail(node* cNode, char* data){
 
 node* list_insert_head(node* cNode, char* data){
     node* nNode = (node*) malloc(sizeof(node));
-    if(cNode) {
+    if(nNode) {
         nNode->next = cNode;
         char *nData = (char *) malloc(sizeof(char) * (strlen(data) + 1));
         if(nData){
@@ -101,7 +101,6 @@ node* list_remove(node* cNode, char* targetData){
         free(cNode->data);
         cNode->next = NULL;
         free(cNode);
-        cNode = NULL;
         return sNode;
     }
     else{
@@ -125,7 +124,6 @@ node* list_removen(node* cNode, int index){
         free(cNode->data);
         cNode->next = NULL;
         free(cNode);
-        cNode = NULL;
         return sNode;
     }
     else{ // Recursive case
@@ -166,12 +164,12 @@ char* list_get(node* cNode, int index){
         return list_get(cNode->next, index);
 }
 
-void list_destroy(node* cNode){
+node* list_destroy(node* cNode){
     if(cNode) {
         list_destroy(cNode->next);
         free(cNode->data);
         cNode->next = NULL;
         free(cNode);
-        cNode = NULL;
     }
+    return NULL;
 }
