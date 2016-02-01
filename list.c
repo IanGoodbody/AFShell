@@ -9,38 +9,80 @@ node* list_insert_tail(node* cNode, char* data){
     }
     else{
         cNode = (node*) malloc(sizeof(node));
-        cNode->next = NULL;
-        char* nData = (char*) malloc(sizeof(char)*(strlen(data)+1)); //I am loyal to ANSI C for no good reason
-        cNode->data = strcpy(nData, data);
+        if(cNode){     //cNode will be null if malloc cannot allocate the, non-null value is valid
+            cNode->next = NULL;
+            char *nData;
+            nData = (char *) malloc(sizeof(char) * (strlen(data) + 1)); //I am loyal to ANSI C for no good reason
+            if(nData)
+                cNode->data = strcpy(nData, data);
+            else{
+                printf("Memory for the node string was not allocated, node creation failed.\n");
+                free(cNode);
+                cNode = NULL;
+            }
+        }
+        else
+            printf("Memory could not be allocated for the new node. Node creation failed.\n");
     }
     return cNode;
 }
 
 node* list_insert_head(node* cNode, char* data){
     node* nNode = (node*) malloc(sizeof(node));
-    nNode->next = cNode;
-    char* nData = (char*) malloc(sizeof(char)*(strlen(data)+1));
-    nNode->data = strcpy(nData, data);
-
-    return nNode;
+    if(cNode) {
+        nNode->next = cNode;
+        char *nData = (char *) malloc(sizeof(char) * (strlen(data) + 1));
+        if(nData){
+            nNode->data = strcpy(nData, data);
+            return nNode;
+        }
+        else{
+            printf("Memory could not be allocated for the node data, node creation failed.\n");
+            free(nNode);
+            nNode = NULL;
+            return cNode;
+        }
+    }
+    else {
+        printf("Memory could not be allocated for tne new node. Node creation failed.\n");
+        return cNode;
+    }
 }
 
 node* list_insertn(node* cNode, char* data, int index){
     index--;
-    if(index < 0)
-        return NULL;
-    else if(!cNode && index) //Index is out of the list range
+    if(index < 0) { // Index was given as zero or negative
+        printf("Index out of bounds Dunderkompf.\n");
         return cNode;
+    }
+    else if(!cNode && index) { // Index is out of bounds
+        printf("Index is outof bounds.\n");
+        return cNode;
+    }
     else if(index){
         cNode->next=list_insertn(cNode->next, data, index);
         return cNode;
     }
     else{
         node* nNode = (node*) malloc(sizeof(node));
-        nNode->next = cNode;
-        char* nData = (char*) malloc(sizeof(char)*(strlen(data)+1));
-        nNode->data = strcpy(nData, data);
-        return nNode;
+        if(nNode) {
+            nNode->next = cNode;
+            char *nData = (char *) malloc(sizeof(char) * (strlen(data) + 1));
+            if(nData) {
+                nNode->data = strcpy(nData, data);
+                return nNode;
+            }
+            else{
+                printf("memory could not be allocated for the new node data. Node creation failed.\n");
+                free(nNode);
+                nNode = NULL;
+                return cNode;
+            }
+        }
+        else {
+            printf("Memory could not be allocated for the node. Node creation failed.\n");
+            return cNode;
+        }
     }
 }
 
@@ -57,6 +99,7 @@ node* list_remove(node* cNode, char* targetData){
     else if(!strcmp(cNode->data, targetData)){
         node* sNode = cNode->next;
         free(cNode->data);
+        cNode->next = NULL;
         free(cNode);
         cNode = NULL;
         return sNode;
@@ -69,18 +112,23 @@ node* list_remove(node* cNode, char* targetData){
 
 node* list_removen(node* cNode, int index){
     index--;
-    if(index < 0)
+    if(index < 0) { // Index was negative or zero
+        printf("Index out of bounds Dunderkompf.\n");
         return NULL;
-    else if(!cNode) //index excedes the end of the list
+    }
+    else if(!cNode) { //index exceeded the end of the list
+        printf("Index out of bounds.\n");
         return cNode;
-    else if(!index){
+    }
+    else if(!index){ // index is zero remove this node
         node* sNode = cNode->next;
         free(cNode->data);
+        cNode->next = NULL;
         free(cNode);
         cNode = NULL;
         return sNode;
     }
-    else{
+    else{ // Recursive case
         cNode->next = list_removen(cNode->next, index);
         return cNode;
     }
@@ -95,7 +143,10 @@ void list_print(node* cNode){
 
 void list_printn(node* cNode, int index){
     index--;
-    if(cNode && index > 0) {
+    if(index < 0){
+        printf("Index out of bounds Dunderkompf.\n");
+    }
+    else if(cNode){
         if (!index)
             printf("%s\n", cNode->data);
         else
@@ -105,13 +156,13 @@ void list_printn(node* cNode, int index){
 
 char* list_get(node* cNode, int index){
     index--;
-    if(index < 0)
+    if(index < 0) // Index negative or zero
         return NULL;
-    else if(!cNode)
+    else if(!cNode) // Index exceeds the end of the list
         return NULL;
-    else if(!index)
+    else if(!index) // Return this node's data.
         return cNode->data;
-    else
+    else // Recursive case
         return list_get(cNode->next, index);
 }
 
@@ -119,6 +170,7 @@ void list_destroy(node* cNode){
     if(cNode) {
         list_destroy(cNode->next);
         free(cNode->data);
+        cNode->next = NULL;
         free(cNode);
         cNode = NULL;
     }

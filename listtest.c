@@ -104,4 +104,15 @@ int main(void) {
 
   list = list_insert_head(list, two);
   list = list_insert_head(list, one);
+  list = list_insert_tail(list, three);
+
+  // Test printing
+  for(i = 0; i < 4; i++) // Indexes zero and 4 should print nothing
+    list_printn(list, i);
+
+  list_remove(list, zero);
+  list_printn(list, 6);
+  list_printn(list, 0);
+
+  list_destroy(list);
 }
