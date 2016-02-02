@@ -1,3 +1,6 @@
+#ifndef PEX1_LIST_H
+#define PEX1_LIST_H
+
 typedef struct s_node {
   char* data;
   struct s_node* next;
@@ -75,5 +78,23 @@ char* list_get(node*, int);
 
 /* list_destroy: free all malloc'd memory used in the linked list,
     including char*'s and node*'s
-   Parameter: node*: a pointer to the head of a linked list */
-void list_destroy(node*);
+   Parameter: node*: a pointer to the head of a linked list
+   Return: NULL pointer used to reset the top level node*/
+node* list_destroy(node*);
+
+/* list_printRF: Prints the list in reverse order with formatted numbers
+ * corresponding to the position of the data in the list
+ * Parameter: node* the head of the list
+ */
+void list_printRF(node*);
+
+/* list_printRF_helper: assists in the reverse printing of of the list by
+ * tracking the index of each node
+ * Parameters:
+ *  - node* the current node of the list
+ *  - int the current index of the list starting with a head index of 1
+ */
+void list_printRF_helper(node*, int);
+
+
+#endif //PEX1_LIST_H

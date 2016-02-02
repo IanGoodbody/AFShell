@@ -23,7 +23,7 @@
    This is not necessarily the same file that will be
    used to test PEX 1, but it should be pretty close */
 
-int main(void) {
+int listTest(void) {
   node* list = NULL;
   char* zero = "zero";
   char* one = "one";
@@ -116,4 +116,6 @@ int main(void) {
   list_printn(list, 0);
 
   list_destroy(list);
+
+  return 0;
 }

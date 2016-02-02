@@ -139,6 +139,17 @@ void list_print(node* cNode){
     }
 }
 
+void list_printRF(node* cNode){
+   list_printRF_helper(cNode, 1);
+}
+void list_printRF_helper(node* cNode, int index){
+   if(cNode){
+       list_printRF_helper(cNode->next, index+1);
+       printf("%i.\t", index);
+       printf("%s\n", cNode->data);
+   }
+}
+
 void list_printn(node* cNode, int index){
     index--;
     if(index < 0){
