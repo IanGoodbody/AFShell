@@ -7,6 +7,7 @@ set(SOURCE_FILES
     CMakeLists.txt
     list.c
     list.h
-    listtest.c)
+    afsh.c
+    afsh.h)
 
 add_executable(PEX1 ${SOURCE_FILES})
