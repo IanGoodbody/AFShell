@@ -11,6 +11,13 @@
  * int main: Starts and runs the Air Force Shell.
  * Author: C1C Ian Goodbody
  * Date: 2 Feb 2015
+ *
+ * Documentation:
+ *  - I pulled heavily from "The C programming Language" for library references, language constructs, and order
+ *      of operations.  It's infuence was used throughout the project
+ *  - The Online documentation for the "unistd.h" library was used as a reference for the "chdir", "getcwd", "fork",
+ *      and "execvp" commands.
+ *  - I referenced the Ubuntu community help forum to research environment variables
  */
 int main(void){
 
