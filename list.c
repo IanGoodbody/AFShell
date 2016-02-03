@@ -113,7 +113,7 @@ node* list_removen(node* cNode, int index){
     index--;
     if(index < 0) { // Index was negative or zero
         printf("Index out of bounds Dunderkompf.\n");
-        return NULL;
+        return cNode;
     }
     else if(!cNode) { //index exceeded the end of the list
         printf("Index out of bounds.\n");
@@ -165,10 +165,14 @@ void list_printn(node* cNode, int index){
 
 char* list_get(node* cNode, int index){
     index--;
-    if(index < 0) // Index negative or zero
+    if(index < 0) { // Index negative or zero
+        printf("Given index is out of bounds.\n");
         return NULL;
-    else if(!cNode) // Index exceeds the end of the list
+    }
+    else if(!cNode) { // Index exceeds the end of the list
+        printf("Given index was out of bounds.\n");
         return NULL;
+    }
     else if(!index) // Return this node's data.
         return cNode->data;
     else // Recursive case
